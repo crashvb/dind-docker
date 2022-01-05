@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eu
+
+# Adapted from: https://github.com/docker-library/docker/blob/8dcb8a15a5a518760e36e7ef28166526d1d03244/20.10/dind/dockerd-entrypoint.sh
+
+rm -f /run/docker.pid
+
+/usr/local/bin/docker-init \
+	-- \
+	/usr/local/bin/dockerd \
+		--experimental \
+		--host="unix:///var/run/docker.sock" \
+		--host=tcp://0.0.0.0:2376 \
+		--tlscacert "/etc/ssl/certs/dindca.crt" \
+		--tlscert "/etc/ssl/certs/dind.crt" \
+		--tlskey "/etc/ssl/private/dind.key" \
+		--tlsverify

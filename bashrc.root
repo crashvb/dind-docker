@@ -1,0 +1,15 @@
+HISTCONTROL=ignoredups:ignorespace
+HISTFILESIZE=99999
+HISTSIZE=9999
+
+shopt -s checkwinsize
+shopt -s histappend
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+set -o vi
+
+PS1='\t \[\033[0;31m\]\u\[\033[00m\]@\[\033[7m\]\h\[\033[00m\] [\w]\n$ '
+
