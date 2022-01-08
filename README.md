@@ -2,7 +2,7 @@
 
 ## Overview
 
-This docker image contains [DinD](https://hub.docker.com/_/docker?tab=tags&name=dind).
+This docker image contains [docker](https://hub.docker.com/_/docker?tab=tags&name=dind).
 
 ## Entrypoint Scripts
 

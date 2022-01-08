@@ -1,6 +1,17 @@
-# docker:20.10.12-dind
 FROM docker:20.10.12-dind@sha256:4e04836731b7100e8bd5e0b35756f53d0b6211ddb3cc7ec326ae3640adcfa004
-LABEL maintainer "Richard Davis <crashvb@gmail.com>"
+ARG org_opencontainers_image_created=undefined
+ARG org_opencontainers_image_revision=undefined
+LABEL \
+	org.opencontainers.image.authors="Richard Davis <crashvb@gmail.com>" \
+	org.opencontainers.image.base.digest="sha256:4e04836731b7100e8bd5e0b35756f53d0b6211ddb3cc7ec326ae3640adcfa004" \
+	org.opencontainers.image.base.name="docker:20.10.12-dind" \
+	org.opencontainers.image.created="${org_opencontainers_image_created}" \
+	org.opencontainers.image.description="Image containing docker." \
+	org.opencontainers.image.licenses="Apache-2.0" \
+	org.opencontainers.image.source="https://github.com/crashvb/dind-docker" \
+	org.opencontainers.image.revision="${org_opencontainers_image_revision}" \
+	org.opencontainers.image.title="crashvb/dind" \
+	org.opencontainers.image.url="https://github.com/crashvb/dind-docker"
 
 USER root
 
