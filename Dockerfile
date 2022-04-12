@@ -13,29 +13,32 @@ LABEL \
 	org.opencontainers.image.title="crashvb/dind" \
 	org.opencontainers.image.url="https://github.com/crashvb/dind-docker"
 
+# hadolint ignore=DL3002
 USER root
 
 # Install packages, download files ...
-ADD docker-* entrypoint healthcheck /sbin/
-ADD dockerd-wrapper /usr/local/bin/
-ADD entrypoint.sh /usr/local/lib/
+COPY docker-* entrypoint healthcheck /sbin/
+COPY dockerd-wrapper /usr/local/bin/
+COPY entrypoint.sh /usr/local/lib/
 RUN apk add --no-cache bash && \
 	docker-apk curl gettext wget
 
 # Configure: bash profile
-ADD bashrc.root /root/.bashrc
-RUN sed -e "s/\/ash/\/bash/g" -i /etc/passwd && \
+COPY bashrc.root /root/.bashrc
+# hadolint ignore=SC2016
+RUN sed -e "s|/ash|/bash|g" -i /etc/passwd && \
 	echo '[[ -n "$BASH_VERSION" && -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"' > /root/.profile
 
 # Configure: docker
 RUN addgroup -S docker
 
 # Configure: entrypoint
+# hadolint ignore=SC2174
 RUN mkdir --mode=0755 --parents /etc/entrypoint.d/ /etc/healthcheck.d/ /etc/ssl/private/
-ADD entrypoint.dind /etc/entrypoint.d/10dind
+COPY entrypoint.dind /etc/entrypoint.d/10dind
 
 # Configure: healthcheck
-ADD healthcheck.dind /etc/healthcheck.d/dind
+COPY healthcheck.dind /etc/healthcheck.d/dind
 
 HEALTHCHECK CMD /sbin/healthcheck
 

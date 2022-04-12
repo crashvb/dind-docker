@@ -1,5 +1,10 @@
 # dind-docker
 
+[![version)](https://img.shields.io/docker/v/crashvb/dind/latest)](https://hub.docker.com/repository/docker/crashvb/dind)
+[![image size](https://img.shields.io/docker/image-size/crashvb/dind/latest)](https://hub.docker.com/repository/docker/crashvb/dind)
+[![linting](https://img.shields.io/badge/linting-hadolint-yellow)](https://github.com/hadolint/hadolint)
+[![license](https://img.shields.io/github/license/crashvb/dind-docker.svg)](https://github.com/crashvb/dind-docker/blob/master/LICENSE.md)
+
 ## Overview
 
 This docker image contains [docker](https://hub.docker.com/_/docker?tab=tags&name=dind).
@@ -14,8 +19,8 @@ The embedded entrypoint script is located at `/etc/entrypoint.d/10dind` and perf
 
  | Variable | Default Value | Description |
  | ---------| ------------- | ----------- |
- | DIND_CERT_DAYS | 30 | Validity period of any generated PKI certificates. |
- | DIND_KEY_SIZE | 4096 | Key size of any generated PKI keys. |
+ | DIND\_CERT\_DAYS | 30 | Validity period of any generated PKI certificates. |
+ | DIND\_KEY\_SIZE | 4096 | Key size of any generated PKI keys. |
 
 ## Standard Configuration
 
