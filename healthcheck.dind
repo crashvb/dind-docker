@@ -2,6 +2,6 @@
 
 set -e -o pipefail
 
-log "Checking if $(basename $0) is healthy ..."
-[[ "X$(pgrep -x /usr/local/bin/dockerd)" != "X" ]]
+log "Checking if $(basename "${0}") is healthy ..."
+[[ $(pgrep -x /usr/local/bin/dockerd | wc -l) -gt 0 ]]
 

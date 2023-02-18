@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+sed \
+	-e "s/--force/-f/g" \
+	-i /usr/local/lib/entrypoint.sh

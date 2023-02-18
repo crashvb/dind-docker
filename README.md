@@ -13,14 +13,20 @@ This docker image contains [docker](https://hub.docker.com/_/docker?tab=tags&nam
 
 ### dind
 
-The embedded entrypoint script is located at `/etc/entrypoint.d/10dind` and performs the following actions:
+The embedded entrypoint script is located at `/etc/entrypoint.d/dind` and performs the following actions:
 
 1. A new dind configuration is generated using the following environment variables:
 
  | Variable | Default Value | Description |
  | ---------| ------------- | ----------- |
- | DIND\_CERT\_DAYS | 30 | Validity period of any generated PKI certificates. |
- | DIND\_KEY\_SIZE | 4096 | Key size of any generated PKI keys. |
+
+## Healthcheck Scripts
+
+### dind
+
+The embedded healthcheck script is located at `/etc/healthcheck.d/dind` and performs the following actions:
+
+1. Verifies that dind is operational.
 
 ## Standard Configuration
 
@@ -29,8 +35,10 @@ The embedded entrypoint script is located at `/etc/entrypoint.d/10dind` and perf
 ```
 /
 ├─ etc/
-│  └─ entrypoint.d/
-│     └─ 10dind
+│  ├─ entrypoint.d/
+│  │  └─ dind
+│  └─ healthcheck.d/
+│     └─ dind
 ├─ run/
 │  └─ secrets/
 │     ├─ dind.crt

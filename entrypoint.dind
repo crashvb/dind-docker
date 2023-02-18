@@ -1,62 +1,13 @@
 #!/bin/bash
 
-set -e
+set -e -o pipefail
 
 # Configure: dind
-if [[ ! -e "$EP_RUN" ]] ; then
-	log "Configuring $(basename $0) for first run ..."
+if [[ ! -e "${EP_RUN}" ]] ; then
+	log "Configuring $(basename "${0}") for first run ..."
 
 	# Generate keypairs ...
-	if [[ -e $EP_SECRETS_ROOT/dindca.crt && -e $EP_SECRETS_ROOT/dind.crt && -e $EP_SECRETS_ROOT/dind.key ]] ; then
-		log "Importing dindca.crt, dind.crt, and dind.key from secrets ..."
-	else
-		# Note: Key size must be >= 3072 for "HIGH" security:
-		#	https://www.gnutls.org/manual/html_node/Selecting-cryptographic-key-sizes.html#tab_003akey_002dsizes#
-		export DIND_CERT_DAYS=${DIND_CERT_DAYS:-30}
-		export DIND_KEY_SIZE=${DIND_KEY_SIZE:-4096}
-
-		log "Generating dindca.crt, dind.crt, and dind.key in secrets ..."
-
-		log "	certificate authority"
-		openssl genrsa \
-			-out /dev/shm/dindca.key \
-			$DIND_KEY_SIZE
-		openssl req \
-			-days $DIND_CERT_DAYS \
-			-key /dev/shm/dindca.key \
-			-new \
-			-nodes \
-			-out $EP_SECRETS_ROOT/dindca.crt \
-			-sha256 \
-			-subj "/cn=dind root ca" \
-			-x509
-
-		log "	server certificate"
-		openssl genrsa \
-			-out $EP_SECRETS_ROOT/dind.key \
-			$DIND_KEY_SIZE
-		openssl req \
-			-key $EP_SECRETS_ROOT/dind.key \
-			-new \
-			-nodes \
-			-out /dev/shm/dind.csr \
-			-sha256 \
-			-subj "/CN=$(hostname --fqdn)"
-		openssl x509 \
-			-CA $EP_SECRETS_ROOT/dindca.crt \
-			-CAkey /dev/shm/dindca.key \
-			-CAcreateserial \
-			-days $DIND_CERT_DAYS \
-			-in /dev/shm/dind.csr \
-			-out $EP_SECRETS_ROOT/dind.crt \
-			-req \
-			-sha256
-
-		rm /dev/shm/{dindca.key,dind.csr} $EP_SECRETS_ROOT/dindca.srl
-
-	fi
-	install --group=root --mode=0640 --owner=root $EP_SECRETS_ROOT/dind.key /etc/ssl/private/
-	install --group=root --mode=0644 --owner=root $EP_SECRETS_ROOT/dind{,ca}.crt /etc/ssl/certs/
+	generate_rsakey dind
 
 	ln -s /etc/ssl/certs/dindca.crt /usr/share/ca-certificates/
 	echo dindca.crt >> /etc/ca-certificates.conf

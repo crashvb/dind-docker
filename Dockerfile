@@ -1,3 +1,5 @@
+FROM crashvb/base:22.04-202302200203@sha256:92b673840a3108cf94c45c7cd755d164725fcdcb40e74c94c8432582039d8540 AS parent
+
 FROM docker:20.10.12-dind@sha256:4e04836731b7100e8bd5e0b35756f53d0b6211ddb3cc7ec326ae3640adcfa004
 ARG org_opencontainers_image_created=undefined
 ARG org_opencontainers_image_revision=undefined
@@ -17,11 +19,14 @@ LABEL \
 USER root
 
 # Install packages, download files ...
-COPY docker-* entrypoint healthcheck /sbin/
+COPY --from=parent /sbin/entrypoint /sbin/healthcheck /sbin/
+COPY --from=parent /usr/local/lib/entrypoint.sh /usr/local/lib/
+COPY alpine-fixes docker-* /sbin/
 COPY dockerd-wrapper /usr/local/bin/
-COPY entrypoint.sh /usr/local/lib/
+# hadolint ignore=DL3018
 RUN apk add --no-cache bash && \
-	docker-apk curl gettext wget
+	docker-apk curl gettext wget && \
+	alpine-fixes
 
 # Configure: bash profile
 COPY bashrc.root /root/.bashrc
@@ -33,7 +38,7 @@ RUN sed -e "s|/ash|/bash|g" -i /etc/passwd && \
 RUN addgroup -S docker
 
 # Configure: entrypoint
-# hadolint ignore=SC2174
+# hadolint ignore=DL3059,SC2174
 RUN mkdir --mode=0755 --parents /etc/entrypoint.d/ /etc/healthcheck.d/ /etc/ssl/private/
 COPY entrypoint.dind /etc/entrypoint.d/10dind
 
