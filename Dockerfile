@@ -40,7 +40,7 @@ RUN addgroup -S docker
 # Configure: entrypoint
 # hadolint ignore=DL3059,SC2174
 RUN mkdir --mode=0755 --parents /etc/entrypoint.d/ /etc/healthcheck.d/ /etc/ssl/private/
-COPY entrypoint.dind /etc/entrypoint.d/10dind
+COPY entrypoint.dind /etc/entrypoint.d/dind
 
 # Configure: healthcheck
 COPY healthcheck.dind /etc/healthcheck.d/dind

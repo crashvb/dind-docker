@@ -20,14 +20,6 @@ The embedded entrypoint script is located at `/etc/entrypoint.d/dind` and perfor
  | Variable | Default Value | Description |
  | ---------| ------------- | ----------- |
 
-## Healthcheck Scripts
-
-### dind
-
-The embedded healthcheck script is located at `/etc/healthcheck.d/dind` and performs the following actions:
-
-1. Verifies that dind is operational.
-
 ## Standard Configuration
 
 ### Container Layout
