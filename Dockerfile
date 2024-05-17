@@ -1,4 +1,4 @@
-FROM crashvb/base:22.04-202402150049@sha256:2cff2d14bc6af6e394356da2794a81a4799228c712d6739fcf12ccf7d0a58006 AS parent
+FROM crashvb/base:22.04-202404121324@sha256:0514f8f7241795ce2567ec5a20e02fbd062511f6bbf0114504902184793c034d AS parent
 
 FROM docker:26.1.3-dind@sha256:ca2dd9db425230285567123ce06dbd3c2aed0eae23d58a1dd5787523a4329eea
 ARG org_opencontainers_image_created=undefined
