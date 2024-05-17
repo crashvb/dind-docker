@@ -1,12 +1,12 @@
 FROM crashvb/base:22.04-202402150049@sha256:2cff2d14bc6af6e394356da2794a81a4799228c712d6739fcf12ccf7d0a58006 AS parent
 
-FROM docker:25.0.3-dind@sha256:4e04836731b7100e8bd5e0b35756f53d0b6211ddb3cc7ec326ae3640adcfa004
+FROM docker:26.1.3-dind@sha256:ca2dd9db425230285567123ce06dbd3c2aed0eae23d58a1dd5787523a4329eea
 ARG org_opencontainers_image_created=undefined
 ARG org_opencontainers_image_revision=undefined
 LABEL \
 	org.opencontainers.image.authors="Richard Davis <crashvb@gmail.com>" \
-	org.opencontainers.image.base.digest="sha256:4e04836731b7100e8bd5e0b35756f53d0b6211ddb3cc7ec326ae3640adcfa004" \
-	org.opencontainers.image.base.name="docker:20.10.12-dind" \
+	org.opencontainers.image.base.digest="sha256:ca2dd9db425230285567123ce06dbd3c2aed0eae23d58a1dd5787523a4329eea" \
+	org.opencontainers.image.base.name="docker:26.1.3-dind" \
 	org.opencontainers.image.created="${org_opencontainers_image_created}" \
 	org.opencontainers.image.description="Image containing docker." \
 	org.opencontainers.image.licenses="Apache-2.0" \
@@ -33,9 +33,6 @@ COPY bashrc.root /root/.bashrc
 # hadolint ignore=SC2016
 RUN sed -e "s|/ash|/bash|g" -i /etc/passwd && \
 	echo '[[ -n "$BASH_VERSION" && -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"' > /root/.profile
-
-# Configure: docker
-RUN addgroup -S docker
 
 # Configure: entrypoint
 # hadolint ignore=DL3059,SC2174
