@@ -1,12 +1,12 @@
 FROM crashvb/base:22.04-202404121324@sha256:0514f8f7241795ce2567ec5a20e02fbd062511f6bbf0114504902184793c034d AS parent
 
-FROM docker:26.1.3-dind@sha256:ca2dd9db425230285567123ce06dbd3c2aed0eae23d58a1dd5787523a4329eea
+FROM docker:27.0.3-dind@sha256:8dc34457f4b09038cf8990b4503fea4a65d879fbba9eceb788f1342217e7c848
 ARG org_opencontainers_image_created=undefined
 ARG org_opencontainers_image_revision=undefined
 LABEL \
 	org.opencontainers.image.authors="Richard Davis <crashvb@gmail.com>" \
-	org.opencontainers.image.base.digest="sha256:ca2dd9db425230285567123ce06dbd3c2aed0eae23d58a1dd5787523a4329eea" \
-	org.opencontainers.image.base.name="docker:26.1.3-dind" \
+	org.opencontainers.image.base.digest="sha256:8dc34457f4b09038cf8990b4503fea4a65d879fbba9eceb788f1342217e7c848" \
+	org.opencontainers.image.base.name="docker:27.0.3-dind" \
 	org.opencontainers.image.created="${org_opencontainers_image_created}" \
 	org.opencontainers.image.description="Image containing docker." \
 	org.opencontainers.image.licenses="Apache-2.0" \
